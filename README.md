@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# 사이트 개요
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- 앱 이름 : F.O.C(Fast Of Calcultaion)
 
-## Available Scripts
+- 주요 기능 : 암산 게임 앱으로, 각 게임 파트(덧셈, 뺄셈, 곱셈, 나눗셈, 혼합계산)별 10문제를 풀고 기록을 재는 게임
 
-In the project directory, you can run:
+# 목적성
 
-### `npm start`
+- 암산 게임으로 기록을 재면서 수학적 계산 능력의 증가
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 5개의 연산 파트(덧셈, 뺄셈, 곱셈, 나눗셈, 혼합계산)별로 암산 게임을 하며 복합적인 계산능력의 증가 및 뇌 활동량 증가
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 계획표
 
-### `npm test`
+- 12/3 : 레퍼런스 찾기, 디자인 제작 시작
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 12/4 : 디자인 완료, 리액트 앱 설치, 페이지 제작,
 
-### `npm run build`
+- 12/5 : 홈 페이지 디자인 구현
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 12/6 : 기능 구현 시작
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 12/7 : 기능 구현 완료 및 수정
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 12/9 : 최종 디자인 및 기능 점검
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 12/10 : 배포
