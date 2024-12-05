@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PageTitle from "../../../components/PageTitle";
 
 const Mix = () => {
   const [problems, setProblems] = useState([]); // 문제 저장
@@ -143,6 +144,7 @@ const Mix = () => {
         margin: "0 auto",
       }}
     >
+      <PageTitle title="혼합계산 게임" />
       <h1 style={{ fontSize: "30px", fontWeight: "500" }}>혼합 계산</h1>
       <div
         style={{

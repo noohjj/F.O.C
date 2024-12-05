@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // 결과 페이지로 이동하기 위해 사용
+import PageTitle from "../../../components/PageTitle";
 
 const Plus = () => {
   const [problems, setProblems] = useState([]); // 문제 저장
@@ -101,6 +102,7 @@ const Plus = () => {
         margin: "0 auto",
       }}
     >
+      <PageTitle title="덧셈게임" />
       <h1 style={{ fontSize: "30px", fontWeight: "500" }}>덧셈</h1>
       <div
         style={{

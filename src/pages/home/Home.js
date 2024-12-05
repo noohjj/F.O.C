@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Logos from "../../image/MainLogo";
 import { Link } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
 
 const Wrap = styled.div`
   height: 90vh;
@@ -20,6 +21,7 @@ const GoText = styled.div`
 const Home = () => {
   return (
     <Wrap>
+      <PageTitle title="Home" />
       <Logos />
       <Link to="/gamehome">
         <GoText>LET'S START!</GoText>

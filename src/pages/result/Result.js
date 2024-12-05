@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
 
 const Result = () => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const Result = () => {
 
   return (
     <div style={{ padding: "20px", textAlign: "center", fontFamily: "Arial" }}>
+      <PageTitle title="결과" />
       <div style={{ margin: "20px 0", fontSize: "24px", fontWeight: "bold" }}>
         RESULT
       </div>

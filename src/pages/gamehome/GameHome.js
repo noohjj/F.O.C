@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mainStyle } from "../../GlobalStyled";
 import { Link } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
 
 const Wrap = styled.div`
   padding: 30px calc(${mainStyle.moPadding} * 2);
@@ -127,6 +128,7 @@ const GameHome = () => {
 
   return (
     <Wrap>
+      <PageTitle title="게임선택" />
       <MainWrap>
         <MainText>문제 선택</MainText>
         <ResetButton onClick={handleReset}>RESET</ResetButton>
