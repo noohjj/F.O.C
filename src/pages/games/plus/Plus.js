@@ -44,6 +44,16 @@ const Plus = () => {
         // 모든 문제를 완료한 경우
         alert("모두 클리어했습니다! 결과를 확인해볼까요?");
         const totalTime = elapsedTime.toFixed(2); // 총 소요 시간
+
+        // localStorage에 최고 기록 갱신
+        const currentRecord = localStorage.getItem("record_plus");
+        if (
+          !currentRecord ||
+          parseFloat(totalTime) < parseFloat(currentRecord)
+        ) {
+          localStorage.setItem("record_plus", totalTime);
+        }
+
         navigate("/result", { state: { timeRecords, totalTime } }); // 결과 페이지로 이동
       }
     } else {

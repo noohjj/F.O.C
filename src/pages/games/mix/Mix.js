@@ -86,6 +86,16 @@ const Mix = () => {
         // 모든 문제를 완료한 경우
         alert("모두 클리어했습니다! 결과를 확인해볼까요?");
         const totalTime = elapsedTime.toFixed(2); // 총 소요 시간
+
+        // localStorage에 최고 기록 갱신
+        const currentRecord = localStorage.getItem("record_mix");
+        if (
+          !currentRecord ||
+          parseFloat(totalTime) < parseFloat(currentRecord)
+        ) {
+          localStorage.setItem("record_mix", totalTime);
+        }
+
         navigate("/result", { state: { timeRecords, totalTime } }); // 결과 페이지로 이동
       }
     } else {
@@ -230,6 +240,20 @@ const Mix = () => {
           확인
         </button>
       </div>
+      <h2
+        style={{
+          fontSize: "13px",
+          color: "dbdbdb",
+          letterSpacing: "0.5px",
+          marginTop: "10px",
+          opacity: "0.7",
+          lineHeight: "20px",
+        }}
+      >
+        Tip : 곱셈과 나눗셈이 포함된 식은 곱셈, 나눗셈부터 계산해야 합니다~!
+        <br />
+        ex : 3+2+6x2 = 6x2부터 계산
+      </h2>
     </div>
   );
 };

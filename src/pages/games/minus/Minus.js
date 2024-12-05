@@ -21,6 +21,8 @@ const Minus = () => {
         { length: numTerms },
         () => Math.floor(Math.random() * 30) + 1
       ); // 1~30 사이 숫자
+
+      // 첫 번째 수에서 나머지 수들을 차례로 빼는 방식
       newProblems.push(problem);
     }
     setProblems(newProblems);
@@ -28,6 +30,7 @@ const Minus = () => {
 
   // 정답 확인 함수
   const checkAnswer = () => {
+    // 문제의 정답을 뺄셈으로 계산
     const correctAnswer = problems[currentIndex].reduce((a, b) => a - b);
 
     if (parseInt(userAnswer) === correctAnswer) {
@@ -44,6 +47,16 @@ const Minus = () => {
         // 모든 문제를 완료한 경우
         alert("모두 클리어했습니다! 결과를 확인해볼까요?");
         const totalTime = elapsedTime.toFixed(2); // 총 소요 시간
+
+        // localStorage에 최고 기록 갱신
+        const currentRecord = localStorage.getItem("record_minus");
+        if (
+          !currentRecord ||
+          parseFloat(totalTime) < parseFloat(currentRecord)
+        ) {
+          localStorage.setItem("record_minus", totalTime);
+        }
+
         navigate("/result", { state: { timeRecords, totalTime } }); // 결과 페이지로 이동
       }
     } else {
@@ -82,7 +95,6 @@ const Minus = () => {
   if (problems.length === 0) {
     return <div>문제를 불러오는 중...</div>;
   }
-
   return (
     <div
       style={{
