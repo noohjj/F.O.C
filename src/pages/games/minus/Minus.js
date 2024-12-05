@@ -1,94 +1,190 @@
 import React, { useState, useEffect } from "react";
-
-// 랜덤 뺄셈 문제 생성 함수
-const generateMinusProblem = () => {
-  const getRandomNumber = (max) => Math.floor(Math.random() * max) + 1;
-  const numOperands = Math.floor(Math.random() * 4) + 2; // 항의 개수 (최소 2개, 최대 4개)
-  const numbers = Array.from({ length: numOperands }, () =>
-    getRandomNumber(20)
-  );
-  return numbers;
-};
+import { useNavigate } from "react-router-dom"; // 결과 페이지로 이동하기 위해 사용
 
 const Minus = () => {
-  const [problem, setProblem] = useState(generateMinusProblem());
-  const [userAnswer, setUserAnswer] = useState("");
-  const [time, setTime] = useState(0);
-  const [timerActive, setTimerActive] = useState(true);
+  const [problems, setProblems] = useState([]); // 문제 저장
+  const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
+  const [userAnswer, setUserAnswer] = useState(""); // 사용자가 입력한 답
+  const [startTime, setStartTime] = useState(null); // 현재 문제 시작 시간
+  const [totalStartTime, setTotalStartTime] = useState(null); // 전체 시작 시간
+  const [timeRecords, setTimeRecords] = useState([]); // 문제별 풀이 시간 기록
+  const [elapsedTime, setElapsedTime] = useState(0); // 총 경과 시간
+  const [currentElapsedTime, setCurrentElapsedTime] = useState(0); // 현재 문제 경과 시간
+  const navigate = useNavigate(); // 페이지 이동용
 
-  // 정답 계산
-  const calculateAnswer = () => problem.reduce((result, num) => result - num);
+  // 랜덤 뺄셈 문제 생성 함수
+  const generateProblems = () => {
+    const newProblems = [];
+    for (let i = 0; i < 10; i++) {
+      const numTerms = Math.floor(Math.random() * 3) + 2; // 항의 개수(2~4)
+      const problem = Array.from(
+        { length: numTerms },
+        () => Math.floor(Math.random() * 30) + 1
+      ); // 1~30 사이 숫자
+      newProblems.push(problem);
+    }
+    setProblems(newProblems);
+  };
 
-  // 타이머 시작
+  // 정답 확인 함수
+  const checkAnswer = () => {
+    const correctAnswer = problems[currentIndex].reduce((a, b) => a - b);
+
+    if (parseInt(userAnswer) === correctAnswer) {
+      // 정답일 경우
+      const timeTaken = currentElapsedTime.toFixed(2); // 현재 문제 풀이 시간
+      setTimeRecords([...timeRecords, timeTaken]); // 시간 기록 저장
+      setUserAnswer(""); // 입력 필드 초기화
+
+      if (currentIndex < problems.length - 1) {
+        setCurrentIndex(currentIndex + 1); // 다음 문제로 이동
+        setStartTime(Date.now()); // 다음 문제 시작 시간
+        setCurrentElapsedTime(0); // 현재 문제 경과 시간 초기화
+      } else {
+        // 모든 문제를 완료한 경우
+        alert("모두 클리어했습니다! 결과를 확인해볼까요?");
+        const totalTime = elapsedTime.toFixed(2); // 총 소요 시간
+        navigate("/result", { state: { timeRecords, totalTime } }); // 결과 페이지로 이동
+      }
+    } else {
+      // 오답일 경우
+      alert("오답입니다! 다시 풀어볼까요?");
+      setUserAnswer(""); // 입력 필드 초기화
+    }
+  };
+
+  // 시간 업데이트
   useEffect(() => {
-    let interval = null;
-    if (timerActive) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [timerActive]);
+    const interval = setInterval(() => {
+      if (totalStartTime) {
+        setElapsedTime((Date.now() - totalStartTime) / 1000); // 총 경과 시간
+      }
+      if (startTime) {
+        setCurrentElapsedTime((Date.now() - startTime) / 1000); // 현재 문제 경과 시간
+      }
+    }, 100); // 0.1초 간격으로 업데이트
 
-  // 시간 포맷 (초 -> 분:초)
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0"
-    )}`;
-  };
+    return () => clearInterval(interval); // 컴포넌트가 언마운트되면 타이머 정리
+  }, [totalStartTime, startTime]);
 
-  // 정답 제출 함수
-  const handleSubmit = () => {
-    if (parseInt(userAnswer) === calculateAnswer()) {
-      alert("정답입니다! 다음 문제로 넘어갑니다!");
-      setProblem(generateMinusProblem()); // 새로운 문제 생성
-      setUserAnswer(""); // 입력값 초기화
-    } else {
-      alert("오답입니다! 다시 풀어보세요!");
+  useEffect(() => {
+    generateProblems();
+    setTotalStartTime(Date.now()); // 전체 시작 시간 기록
+    setStartTime(Date.now()); // 첫 문제 시작 시간 기록
+  }, []);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      checkAnswer(); // 엔터 키를 눌렀을 때 정답 확인
     }
   };
+
+  if (problems.length === 0) {
+    return <div>문제를 불러오는 중...</div>;
+  }
 
   return (
-    <div>
-      <h3>뺄셈 문제</h3>
-      <h4>시간: {formatTime(time)}</h4>
-      <div style={{ fontSize: "24px", margin: "20px 0" }}>
-        {problem.join(" - ")} {/* 문제 표시 */}
-      </div>
-      <input
-        type="number"
-        value={userAnswer}
-        onChange={(e) => setUserAnswer(e.target.value)}
-        placeholder="정답을 입력하세요"
+    <div
+      style={{
+        padding: "20px",
+        fontFamily: "Arial",
+        margin: "0 auto",
+      }}
+    >
+      <h1 style={{ fontSize: "30px", fontWeight: "500" }}>뺄셈</h1>
+      <div
         style={{
-          padding: "10px",
-          fontSize: "18px",
-          borderRadius: "5px",
-          border: "1px solid #ccc",
-          width: "200px",
-          textAlign: "center",
-        }}
-      />
-      <button
-        onClick={handleSubmit}
-        style={{
-          marginLeft: "10px",
-          padding: "10px 20px",
-          fontSize: "18px",
-          backgroundColor: "#fca43b",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "10px",
         }}
       >
-        제출
-      </button>
+        <div
+          style={{
+            width: "200px",
+            height: "50px",
+            backgroundColor: "#f7f3f3",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "20px",
+          }}
+        >
+          <strong style={{ fontSize: "14px" }}>현재 문제 풀이 시간:</strong>
+          <h4 style={{ fontSize: "20px" }}>
+            {currentElapsedTime.toFixed(2)}초
+          </h4>
+        </div>
+        <div
+          style={{
+            width: "200px",
+            height: "50px",
+            backgroundColor: "#f7f3f3",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "20px",
+          }}
+        >
+          <strong style={{ fontSize: "14px" }}>총 경과 시간:</strong>
+          <h4 style={{ fontSize: "20px" }}>{elapsedTime.toFixed(2)}초</h4>
+        </div>
+      </div>
+      <div style={{ marginTop: "20px", marginBottom: "10px" }}>
+        <strong>문제 {currentIndex + 1} / 10</strong>
+      </div>
+      <div
+        style={{
+          width: "100%",
+          height: "200px",
+          backgroundColor: "#f7f3f3",
+          marginBottom: "10px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "35px",
+          fontWeight: "600",
+          borderRadius: "20px",
+        }}
+      >
+        {problems[currentIndex].join(" - ")} =
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "20px",
+        }}
+      >
+        <input
+          type="number"
+          placeholder="정답을 입력해 주세요"
+          value={userAnswer}
+          onChange={(e) => setUserAnswer(e.target.value)}
+          onKeyPress={handleKeyPress}
+          style={{
+            fontSize: "16px",
+            padding: "5px",
+            width: "80%",
+          }}
+        />
+        <button
+          onClick={checkAnswer}
+          style={{
+            marginLeft: "10px",
+            padding: "5px 15px",
+            fontSize: "16px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          확인
+        </button>
+      </div>
     </div>
   );
 };

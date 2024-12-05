@@ -73,45 +73,117 @@ const Plus = () => {
     setStartTime(Date.now()); // 첫 문제 시작 시간 기록
   }, []);
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      checkAnswer(); // 엔터 키를 눌렀을 때 정답 확인
+    }
+  };
+
   if (problems.length === 0) {
     return <div>문제를 불러오는 중...</div>;
   }
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial" }}>
-      <h1>덧셈 문제</h1>
-      <div style={{ marginBottom: "20px" }}>
-        <strong>문제 {currentIndex + 1} / 10</strong>
-      </div>
-      <div style={{ fontSize: "20px", marginBottom: "10px" }}>
-        {problems[currentIndex].join(" + ")} =
-      </div>
-      <input
-        type="number"
-        placeholder="정답을 입력해 주세요"
-        value={userAnswer}
-        onChange={(e) => setUserAnswer(e.target.value)}
-        style={{ fontSize: "16px", padding: "5px", width: "200px" }}
-      />
-      <button
-        onClick={checkAnswer}
+    <div
+      style={{
+        padding: "20px",
+        fontFamily: "Arial",
+        margin: "0 auto",
+      }}
+    >
+      <h1 style={{ fontSize: "30px", fontWeight: "500" }}>덧셈</h1>
+      <div
         style={{
-          marginLeft: "10px",
-          padding: "5px 15px",
-          fontSize: "16px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "10px",
         }}
       >
-        확인
-      </button>
-      <div style={{ marginTop: "20px" }}>
-        <strong>현재 문제 풀이 시간:</strong> {currentElapsedTime.toFixed(2)}초
+        <div
+          style={{
+            width: "200px",
+            height: "50px",
+            backgroundColor: "#f7f3f3",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "20px",
+          }}
+        >
+          <strong style={{ fontSize: "14px" }}>현재 문제 풀이 시간:</strong>
+          <h4 style={{ fontSize: "20px" }}>
+            {currentElapsedTime.toFixed(2)}초
+          </h4>
+        </div>
+        <div
+          style={{
+            width: "200px",
+            height: "50px",
+            backgroundColor: "#f7f3f3",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "20px",
+          }}
+        >
+          <strong style={{ fontSize: "14px" }}>총 경과 시간:</strong>
+          <h4 style={{ fontSize: "20px" }}>{elapsedTime.toFixed(2)}초</h4>
+        </div>
       </div>
-      <div>
-        <strong>총 경과 시간:</strong> {elapsedTime.toFixed(2)}초
+      <div style={{ marginTop: "20px", marginBottom: "10px" }}>
+        <strong>문제 {currentIndex + 1} / 10</strong>
+      </div>
+      <div
+        style={{
+          width: "100%",
+          height: "200px",
+          backgroundColor: "#f7f3f3",
+          marginBottom: "10px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "35px",
+          fontWeight: "600",
+          borderRadius: "20px",
+        }}
+      >
+        {problems[currentIndex].join(" + ")} =
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "20px",
+        }}
+      >
+        <input
+          type="number"
+          placeholder="정답을 입력해 주세요"
+          value={userAnswer}
+          onChange={(e) => setUserAnswer(e.target.value)}
+          onKeyPress={handleKeyPress}
+          style={{
+            fontSize: "16px",
+            padding: "5px",
+            width: "80%",
+          }}
+        />
+        <button
+          onClick={checkAnswer}
+          style={{
+            marginLeft: "10px",
+            padding: "5px 15px",
+            fontSize: "16px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          확인
+        </button>
       </div>
     </div>
   );

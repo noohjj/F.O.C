@@ -111,7 +111,7 @@ const GameHome = () => {
         <MultiGame>
           <Text>곱셈</Text>
           <Record>기록 : {records.multiply}</Record>
-          <Link to="/multiply">
+          <Link to="/multiple">
             <PlayBtn>PLAY</PlayBtn>
           </Link>
         </MultiGame>
