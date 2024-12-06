@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/F.O.C/static/js/main.c4abeeba.js",
+    "static/media/FOCLOGO.png": "/F.O.C/static/media/FOCLOGO.0e7b9b04f22f4ff34d43.png",
+    "index.html": "/F.O.C/index.html",
+    "main.c4abeeba.js.map": "/F.O.C/static/js/main.c4abeeba.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.c4abeeba.js"
+  ]
+}
